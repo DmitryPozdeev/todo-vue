@@ -1,18 +1,22 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<div id="home">
+	</div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+	import ShowToDoTopic from "../components/ShowToDoTopic";
+	import {mapState} from "vuex";
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
+	export default {
+		name: 'home',
+		components: {
+			ShowToDoTopic
+		},
+		computed: mapState(["isTodoTopicActive"]),
+	}
 </script>
+<style lang="scss">
+	#home {
+		display: flex;
+	}
+</style>

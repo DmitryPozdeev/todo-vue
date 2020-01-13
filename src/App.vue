@@ -1,32 +1,53 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+	<div id="app">
+		<nav>
+			<router-link to="/">
+				<img class="profile-icon" src="./assets/profile_icon.png" alt="home">
+			</router-link>
+			<router-link to="/todos/categories/">
+				ToDo
+			</router-link>
+		</nav>
+		<router-view/>
+
+	</div>
 </template>
 
+<script>
+	export default {
+		name: "App",
+
+	}
+</script>
+
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+	@import "./style/variables";
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
+	#app {
+		padding-left: 90px;
+	}
+	nav{
+		position: fixed;
+		width: 90px;
+		height: 100%;
+		background-color: $blue;
+		top: 0;
+		left: 0;
+		overflow-x: hidden;
+		padding-top: 20px !important;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.profile-icon {
+			margin: 0 auto;
+			width: 50px;
+			height: 50px;
+			border: 1px solid $green;
+			border-radius: 25px;
+		}
+		box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+	}
+	#main {
+		margin-left: 90px;
+	}
 </style>
