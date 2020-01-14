@@ -1,24 +1,46 @@
 <template>
-	<div id="left-side-panel" >
-		<button class="add_category_button" v-on:click="changeModalStatus"/>
+	<div id="left-side-panel">
+		<button class="add_category_button"
+		        v-on:click="changeModalStatus"/>
 		<Modal title="Add new" v-if="todo.modalShow">
 			<label for="add_selection">
-				<select id="add_selection" v-model="selected_option">
-					<option v-for="option in options" v-bind:value="option.value">
+				<select id="add_selection" v-model="selectedOption">
+					<option v-for="option in options"
+					        v-bind:value="option.value">
 						{{ option.text }}
 					</option>
 				</select>
 			</label>
-			<div v-if="selected_option === 'category'">
+			<div v-if="selectedOption === 'category'">
 				<label for="name">
-					<input id="name_of_category" class="modal__field" type="text" placeholder="Name of category" v-model="new_category_title">
-					<button id="done_button" v-on:click="addNewCategory()">Create</button>
+					<input id="name_of_category"
+					       class="modal__field"
+					       type="text"
+					       placeholder="Name of category"
+					       v-model="newCategoryTitle">
+					<button class="done_button"
+					        v-on:click="addNewCategory">Create
+					</button>
 				</label>
 			</div>
-			<div v-else-if="selected_option === 'topic'">
-				<label for="name">
-					<input id="name" class="modal__field" type="text" placeholder="Name of category" >
+			<div v-else-if="selectedOption === 'topic'">
+				<label for="category_selection">
+					<select id="category_selection" v-model="selectedCategory">
+						<option v-for="option in chooseCategoryOptions" v-bind:value="option.id">
+							{{ option.title }}
+						</option>
+					</select>
 				</label>
+				<label for="name">
+					<input id="name"
+					       class="modal__field"
+					       type="text"
+					       placeholder="Name of topic"
+					       v-model="newTopicTitle">
+				</label>
+				<button class="done_button"
+				        v-on:click="addNewTopic">Create
+				</button>
 			</div>
 
 		</Modal>
@@ -42,6 +64,7 @@
 	import ShowToDoTopic from "./ShowToDoTopic";
 	import Modal from "./Modal";
 	import {mapState} from 'vuex';
+
 	export default {
 		name: "TodoAside",
 		components: {Modal, ShowToDoTopic },
@@ -50,23 +73,43 @@
 		},
 		data() {
 			return {
-				selected_option: 'category',
+				selectedOption: 'category',
 				options: [
-					{ text: 'New Category', value: 'category' },
-					{ text: 'New Topic', value: 'topic' },
+					{text: 'New Category', value: 'category'},
+					{text: 'New Topic', value: 'topic'},
 				],
-				new_category_title: ''
+				newCategoryTitle: '',
+				newTopicTitle: '',
+				selectedCategory: 1,
+				chooseCategoryOptions: this.categoryOptions()
+
 			}
 		},
 		methods: {
-			changeModalStatus () {
+
+			changeModalStatus() {
 				this.$store.commit('changeModalStatus');
 			},
-			addNewCategory () {
-				this.$store.commit('newCategory', this.new_category_title);
+			addNewCategory() {
+				this.$store.commit('newCategory', this.newCategoryTitle);
+				this.newCategoryTitle = '';
+				this.changeModalStatus();
+			},
+			categoryOptions() {
+				return this.$store.getters.categoryOptions;
+			},
+			addNewTopic() {
+				let selectedCategory = this.selectedCategory,
+					newTopicTitle = this.newTopicTitle;
+
+				this.$store.commit({
+					type: 'newTopic',
+					selectedCategory: selectedCategory,
+					newTopicTitle: newTopicTitle
+				});
+				this.newTopicTitle = '';
 				this.changeModalStatus();
 			}
-
 		}
 
 	}

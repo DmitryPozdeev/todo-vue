@@ -8,6 +8,7 @@
 					<button class="close" @click="emitClose">&times;</button>
 				</div>
 				<div class="modal-content">
+					<!--suppress CheckTagEmptyBody -->
 					<slot></slot>
 				</div>
 			</div>
@@ -101,6 +102,7 @@
 				justify-content: start;
 				height: 100%;
 				padding: 10px 0 0 0;
+
 				select {
 					cursor: pointer;
 					-webkit-appearance: none;
@@ -108,7 +110,8 @@
 					font: 400 12px/1.3 sans-serif;
 					margin-bottom: 30px;
 				}
-				#done_button {
+
+				.done_button {
 					position: absolute;
 					left: 35px;
 					bottom: 25px;

@@ -2,76 +2,86 @@ const state = {
 	modalShow: false,
 	todoCategories: [
 		{
-			title: 'Personal',
+			title: "Personal",
 			id: 1,
 			topics: [
 				{
-					title: 'Fitness',
+					title: "Fitness",
 					id: 1,
 					isActive: false,
 					todos: [
 						{
-							title: 'Title',
-							status: 'ToDo',
+							title: "Title",
+							status: "ToDo",
 							body: "Lorem ipsum"
 						}
 					]
 				},
 				{
-					title: 'Language',
+					title: "Language",
 					id: 2,
 					isActive: false,
 					todos: [
 						{
-							title: 'Title',
-							status: 'ToDo',
+							title: "Title",
+							status: "ToDo",
 							body: "Lorem ipsum"
 						}
 					]
-				},
+				}
 			]
 		},
 		{
-			title: 'Finance',
+			title: "Finance",
 			id: 2,
 			topics: [
 				{
-					title: 'Stocks',
+					title: "Stocks",
 					id: 1,
 					isActive: false,
 					todos: [
 						{
-							title: 'Title',
-							status: 'ToDo',
+							title: "Title",
+							status: "ToDo",
 							body: "Lorem ipsum"
 						}
 					]
 				},
 				{
-					title: 'Job',
+					title: "Job",
 					id: 2,
 					isActive: false,
 					todos: [
 						{
-							title: 'Title',
-							status: 'ToDo',
+							title: "Title",
+							status: "ToDo",
 							body: "Lorem ipsum"
 						}
 					]
-				},
+				}
 			]
-		},
+		}
 	]
 };
 const mutations = {
-	newCategory (state, categoryName) {
+	newCategory(state, categoryName) {
 		state.todoCategories.push({
 			title: categoryName,
 			id: state.todoCategories[state.todoCategories.length - 1].id + 1
 		});
 	},
-	changeModalStatus (state) {
-		state.modalShow = !state.modalShow
+	newTopic(state, payload) {
+		state.todoCategories.find(el => el.id === payload.selectedCategory).topics.push({
+			title: payload.newTopicTitle,
+			id: state.todoCategories.find(el => el.id === payload.selectedCategory).topics[
+			state.todoCategories.find(el => el.id === payload.selectedCategory).topics.length - 1
+				].id + 1,
+			isActive: false,
+			todos: []
+		});
+	},
+	changeModalStatus(state) {
+		state.modalShow = !state.modalShow;
 	}
 };
 const getters = {
@@ -84,13 +94,18 @@ const getters = {
 	// 	}
 	// 	return 0;
 	// },
-	isActive: (state) => {
-		return state.modalShow
+	findCategoryById(state, categoryId) {
+		return state.todoCategories.find(el => el.id === categoryId)
+	},
+	isActive: state => {
+		return state.modalShow;
+	},
+	categoryOptions(state) {
+		return state.todoCategories;
 	}
 };
 export default {
 	state,
 	mutations,
 	getters
-}
-
+};
