@@ -2,9 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import './style/reset.css'
-Vue.config.productionTip = false;
+import './assets/style/reset.css'
+import VScrollLock from 'v-scroll-lock'
 
+Vue.use(VScrollLock);
+Vue.config.productionTip = false;
 new Vue({
   router,
   store,

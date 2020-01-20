@@ -18,18 +18,28 @@
 
 <script>
     export default {
-    	name: 'modal',
+	    name: 'modal',
 	    props: {
 		    title: {
 			    default: ''
 		    },
 		    styles: {
-    			default: 'width: 435px; height: 360px'
+			    default: 'width: 435px; height: 360px'
+		    },
+		    show: {
+			    default: false
+		    }
+	    },
+	    data() {
+		    return {
+			    modalShow: this.$props.show
 		    }
 	    },
 	    methods: {
-    		emitClose () {
-			    this.$store.commit('changeModalStatus')
+		    emitClose() {
+			    this.modalShow = !this.modalShow;
+			    this.$store.commit('changeModalActivation', false);
+			    this.$emit('emit-close', this.modalShow);
 		    }
 	    }
     }
@@ -49,7 +59,6 @@
 		right: 0;
 		bottom: 0;
 		z-index: 999;
-
 		.overflow {
 			height: 100vh;
 			width: 100vw;
@@ -139,6 +148,21 @@
 					padding: 0.65em 2.5em 0.55em 0.75em;
 					box-sizing: border-box;
 				}
+
+				.modal__textarea {
+					overflow-x: hidden;
+					width: 375px;
+					height: 125px;
+					font-weight: 500;
+					font-size: 16px;
+					line-height: 20px;
+					border: 1px solid #CFCFCF;
+					border-radius: 25px;
+					padding: 1em;
+					box-sizing: border-box;
+					resize: none;
+				}
+
 				select, option {
 					width: 375px;
 					height: 40px;

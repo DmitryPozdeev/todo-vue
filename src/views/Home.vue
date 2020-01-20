@@ -4,7 +4,7 @@
 </template>
 
 <script>
-	import ShowToDoTopic from "../components/ShowToDoTopic";
+	import ShowToDoTopic from "./TodosPage/TheShowTopic";
 	import {mapState} from "vuex";
 
 	export default {
