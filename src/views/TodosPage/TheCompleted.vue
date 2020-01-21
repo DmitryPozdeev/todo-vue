@@ -1,20 +1,19 @@
 <template>
-	<div id="all-todo-list" v-if="">
-		<div class="todo-block" v-for="todoEl in filteredUsers">
-			<h2 class="todo-block__status" v-bind:style="{color: getStatus(todoEl.status)}">{{todoEl.status}}</h2>
-			<p class="todo-block__text-body">{{todoEl.body}}</p>
-			<button class="todo-block__button">Mark as</button>
-		</div>
-	</div>
+	<todos-displaying v-bind:filteredUsers="filteredUsers"/>
 </template>
 
 <script>
+	import TodosDisplaying from "../../components/TodosDisplaying";
+
 	export default {
 		name: "AllCompleted",
 		props: {
 			search: {
 				default: ''
 			}
+		},
+		components: {
+			TodosDisplaying
 		},
 		data() {
 			return {

@@ -26,16 +26,23 @@ const mutations = {
 		});
 	},
 	newTodo(state, payload) {
-		let todos = state.todoCategories.find(el => el.id === payload.selectedCategory).topics
-			.find(el => el.id === payload.selectedTopic).todos;
-		todos.lastTodoId += 1;
-		todos.push({
+		let topic = state.todoCategories.find(el => el.id === payload.selectedCategory).topics
+			.find(el => el.id === payload.selectedTopic);
+		topic.lastTodoId += 1;
+		topic.todos.push({
 			body: payload.todoBody,
-			id: todos.lastTodoId,
+			id: topic.lastTodoId,
 			status: 'ToDo'
 		});
 		state.todoCategories.find(el => el.id === payload.selectedCategory).topics
-			.find(el => el.id === payload.selectedTopic).todos = todos;
+			.find(el => el.id === payload.selectedTopic).todos = topic.todos;
+	},
+	removeTodo(state, payload) {
+		let todoId_ = payload.todoId;
+		let todos = state.todoCategories.find(el => el.id === payload.selectedCategory).topics
+			.find(el => el.id === payload.selectedTopic).todos;
+		todos.splice(this.getters.getTodoPosition(todoId_, todos), 1);
+		this.dispatch('updateLocalStorage');
 	}
 };
 const getters = {
@@ -46,6 +53,13 @@ const getters = {
 	},
 	categoryOptions(state) {
 		return state.todoCategories;
+	},
+	getTodoPosition: state => (todoId, todos) => {
+		let idx = 0,
+			l = todos.length;
+		for (idx; todos[idx] && todos[idx].id !== todoId; idx++) {
+		}
+		return idx === l ? -1 : idx;
 	}
 };
 const actions = {

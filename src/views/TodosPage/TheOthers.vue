@@ -1,6 +1,6 @@
 <template>
 	<div id="all-todo-list" v-if="">
-		<div class="todo-block" v-for="todoEl in filteredUsers">
+		<div class="todo-block" v-for="todoEl in filteredUsers" :key="todoEl.id">
 			<h2 class="todo-block__status" v-bind:style="{color: getStatus(todoEl.status)}">{{todoEl.status}}</h2>
 			<p class="todo-block__text-body">{{todoEl.body}}</p>
 			<button class="todo-block__button">Mark as</button>
